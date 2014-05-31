@@ -16,6 +16,17 @@ Releases are deployed to `/hhvm/releases/release-*` and symlink `/hhvm/releases/
 
 Nginx and hhvm will serve content from `/var/www` symlink, which points to `latest/static` directory.
 
+One release
+===========
+
+A release/build contains `hhvm` binary, bytecode repo `hhvm.hhbc`, `build_id` file, `static` directory, etc.
+
+I am deploying `hhvm` binary together with the repo and the rest for the following reasons:
+
+* Repo schema of `hhvm` and `hhvm.hhbc` have to match, if we upgrade only hhvm, then bytecode repo might not work as it's built for different repo schema.
+* `/usr/bin/hhvm` is maintained by the operating systems package manager, which is out of our control.
+* Reverting the release means that we only have to change one symlink and everything else (runtime binary and bytecode repo) will match.
+* Static contents is tied together with the release, so that it makes sense to keep static contents in the same release directory as well.
 
 Assumptions
 ===========

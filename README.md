@@ -19,7 +19,7 @@ Nginx and hhvm will serve content from `/var/www` symlink, which points to `late
 One release
 ===========
 
-A release/build contains `hhvm` binary, bytecode repo `hhvm.hhbc`, `build_id` file, `static` directory, etc.
+A release/build artifacts are placed into a single directory, which contains: `hhvm` binary, bytecode repo `hhvm.hhbc`, `build_id` file, `static` directory, etc.
 
 I am deploying `hhvm` binary together with the repo and the rest for the following reasons:
 

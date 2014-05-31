@@ -1,0 +1,36 @@
+Log {
+  Header = On
+  NativeStackTrace = Off
+  UseCronolog = true
+  File = /var/log/hhvm/all/error.%Y-%m-%d.log
+  SymLink = /var/log/hhvm/error.log
+
+  Access {
+    Default {
+      File = /var/log/hhvm/all/access.%Y-%m-%d.log
+      SymLink = /var/log/hhvm/access.log
+    }
+  }
+  AdminLog {
+    File = /var/log/hhvm/all/admin_access.%Y-%m-%d.log
+    SymLink = /var/log/hhvm/admin_access.log
+  }
+}
+
+PidFile = /hhvm/var/www.pid
+
+Server {
+  Type = fastcgi
+  Port = 9000
+  SourceRoot = /var/www
+  EnableStaticContentFromDisk = false
+}
+
+AdminServer {
+  Port = 9001
+  Password = insecure
+}
+
+Eval {
+  Jit = true
+}

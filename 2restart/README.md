@@ -1,0 +1,1 @@
+This script is modeled as a `init.d` script, with arguments: `start`, `stop`, `restart` and `status`.

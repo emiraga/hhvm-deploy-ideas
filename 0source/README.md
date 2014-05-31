@@ -1,0 +1,1 @@
+`status.php` will be useful for draining and stopping requests to hhvm server.

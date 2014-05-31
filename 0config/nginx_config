@@ -1,0 +1,20 @@
+server {
+    listen 80 default_server;
+    root /var/www/;
+    index /index.php;
+
+    location ~ \.php$ {
+        fastcgi_split_path_info ^(.+\.php)(/.+)$;
+        fastcgi_pass 127.0.0.1:9000;
+        fastcgi_index index.php;
+        include fastcgi_params;
+    }
+}
+
+server {
+    listen 8001;  # admin port
+    location ~ {
+        fastcgi_pass 127.0.0.1:9001;
+        include fastcgi_params;
+    }
+}

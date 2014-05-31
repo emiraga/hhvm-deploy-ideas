@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-release_name=${release_name-test_release_name}
+release_name=${release_name-release-example-1}
 
 if [ ! -d /hhvm/releases/$release_name ]; then
   echo Not found /hhvm/releases/$release_name

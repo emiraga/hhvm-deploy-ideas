@@ -2,6 +2,12 @@
 
 ADMIN_PASSWORD=insecure
 
+alive=`curl -s -m 1 http://127.0.0.1:80/status.php`
+if [ "x$alive" != "x1-AM-ALIVE" ]; then
+  echo "Server is not alive, perhaps try restarting it."
+  exit 2
+fi
+
 # somehow grab the list of comma-separated allowed versions
 ALLOWED_IDS=2014-05-30-21-50-test-v1
 
@@ -24,4 +30,4 @@ echo "  Expected: $ALLOWED_IDS"
 echo "  Found: $current_build"
 echo "Raise some kind of an alarm, or maybe start to 'pull' the latest version"
 echo "(pull operation *must* be rate limited to avoid killing the entire fleet)"
-exit 1
+exit 3

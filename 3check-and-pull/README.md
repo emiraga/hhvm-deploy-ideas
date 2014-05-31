@@ -10,4 +10,4 @@ List of allowed build-ids would have to live in some central location, and we wo
 TODO
 ====
 
-* Implement all operations mentioned.
+* Implement operations mentioned.

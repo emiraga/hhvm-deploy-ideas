@@ -18,6 +18,16 @@ Runtime binary is `hhvm`. Compiler is `hphp`, it's sufficient to simply point th
 
 `config.hdf` is configuration file for hhvm that we just copy from the source.
 
+Optional output artifacts
+=========================
+
+`cache_priming.hhbc` is useful when you have some cache data that should be
+compiled and deployed in parallel with the rest of your code.
+Secondary repo is used by hhvm in addition with the primary code repo.
+`use_php_cache_priming=1` env flag enables this.
+
+`cache_priming.so`, not yet implemented.
+
 TODO
 ====
 

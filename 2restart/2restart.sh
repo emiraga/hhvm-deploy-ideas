@@ -33,6 +33,12 @@ start() {
   rm -f $STATUS_FILE
   # preload into the vm page cache
   cat $latest/hhvm $latest/hhvm.hhbc >/dev/null
+
+  central_repo=/tmp/hhvm.dummy.repo.hhbc
+  if [ -e $latest/cache_priming.hhbc ]; then
+    central_repo=$latest/cache_priming.hhbc
+  fi
+
   # start the daemon
   $latest/hhvm \
     --mode=daemon \
@@ -43,7 +49,7 @@ start() {
     -vRepo.Authoritative=true \
     -vRepo.Local.Mode=r- \
     -vRepo.Local.Path=$latest/hhvm.hhbc \
-    -vRepo.Central.Path=/tmp/hhvm.dummy.repo.hhbc
+    -vRepo.Central.Path=$central_repo
 
   echo 'Running health checks for the new hhvm instance'
   i=0

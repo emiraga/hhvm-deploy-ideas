@@ -3,8 +3,6 @@ Duplication
 
 Normally, hhvm deployments rely on PHP files (in source form) as well as bytecode being available at the destination. This is kind of weird, since files are checked to exist at the destination, but their contents are read from the bytecode (in compiled form).
 
-There is a way to avoid this duplication, but in order to keep things simple, I am not going to use "file cache", even though I would like to. Which means that .php files are deployed both in source form and in the compiled form.
-
 Output artifacts
 ================
 

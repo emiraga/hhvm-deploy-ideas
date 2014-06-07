@@ -32,7 +32,7 @@ Cache priming
 =============
 
 This is optional but I present two different ways you can pre-populate some
-data and make it available to you PHP code at runtime.
+data and make it available to your PHP code at runtime.
 
 First is `use_php_cache_priming=1` which generates php files, which are then
 compiled into an `cache_priming.hhbc` and can be used at runtime.

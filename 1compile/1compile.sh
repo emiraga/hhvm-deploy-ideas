@@ -39,7 +39,7 @@ rsync --delete -a \
 
 
 if [ $use_php_cache_priming -gt 0 ]; then
-  rm -f $input/cache_priming.php  # this will be compiled in a separate repo
+  rm -f $input/cache_priming/*.php  # this will be compiled in a separate repo
 fi
 
 # produces: hhvm.hhbc, CodeError.js, Stats.js,
@@ -62,9 +62,10 @@ if [ $use_php_cache_priming -gt 0 ]; then
   cache_source_tmp=`mktemp -d`
   cache_output_tmp=`mktemp -d`
 
-  $output/hhvm \
-    $input/scripts/generate_cache_priming_php.php \
-      > $cache_source_tmp/cache_priming.php
+  mkdir -p $cache_source_tmp/cache_priming
+  pushd $cache_source_tmp/cache_priming
+  $output/hhvm $input/scripts/generate_cache_priming_php.php
+  popd
 
   $output/hphp --target=hhbc --format=binary --program=cache_priming.hhbc \
     --log=3 --force=1 --keep-tempdir=1 \
@@ -72,10 +73,13 @@ if [ $use_php_cache_priming -gt 0 ]; then
     --output-dir=$cache_output_tmp
   mv $cache_output_tmp/cache_priming.hhbc $output/cache_priming.hhbc
 
-  # Make hhvm see that "cache_priming.php" is a valid file that can be used
-  touch $output/static/cache_priming.php
+  # Make hhvm see that "cache_priming/*.php" are a valid files that can be used
+  mkdir -p $output/static/cache_priming/
+  for fname in `find $cache_source_tmp/cache_priming/ -type f -printf '%P\n'`;
+  do
+    touch $output/static/cache_priming/$fname
+  done
 fi
-
 
 if [ $use_so_cache_priming -gt 0 ]; then
 

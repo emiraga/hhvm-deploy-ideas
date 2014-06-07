@@ -5,6 +5,7 @@ input=${input-/home/emir/test-source}
 config=${config-/home/emir/test-config/config.hdf}
 output=${output-`pwd`}
 use_php_cache_priming=${use_php_cache_priming-0}
+use_so_cache_priming=${use_so_cache_priming-0}
 
 installed_hhvm=`which hhvm`
 if [ -z "$installed_hhvm" ]; then
@@ -73,4 +74,25 @@ if [ $use_php_cache_priming -gt 0 ]; then
 
   # Make hhvm see that "cache_priming.php" is a valid file that can be used
   touch $output/static/cache_priming.php
+fi
+
+
+if [ $use_so_cache_priming -gt 0 ]; then
+
+  # produces cache_priming.so
+  #
+  # TODO: this compile step can be run in parallel with the one that produces hhvm.hhbc
+  #
+  tmp=`mktemp -d`
+  pushd $tmp
+  $output/hhvm $input/scripts/generate_cache_priming_so.php
+  popd
+
+  cp $input/scripts/apc_prime.h $tmp/
+
+  # TODO: compile each .cpp individually, in case there is too much data to for
+  #       this to be compiled all at once.
+  g++ -std=c++11 -fPIC -shared -Wno-write-strings \
+    $tmp/*.cpp \
+    -o $output/cache_priming.so
 fi

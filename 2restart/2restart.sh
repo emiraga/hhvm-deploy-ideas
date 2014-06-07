@@ -39,6 +39,11 @@ start() {
     central_repo=$latest/cache_priming.hhbc
   fi
 
+  apc_prime=''
+  if [ -e $latest/cache_priming.so ]; then
+    apc_prime=-vServer.APC.PrimeLibrary=$latest/cache_priming.so
+  fi
+
   # start the daemon
   $latest/hhvm \
     --mode=daemon \
@@ -49,7 +54,8 @@ start() {
     -vRepo.Authoritative=true \
     -vRepo.Local.Mode=r- \
     -vRepo.Local.Path=$latest/hhvm.hhbc \
-    -vRepo.Central.Path=$central_repo
+    -vRepo.Central.Path=$central_repo \
+    $apc_prime
 
   echo 'Running health checks for the new hhvm instance'
   i=0

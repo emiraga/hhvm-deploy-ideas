@@ -23,10 +23,12 @@ Optional output artifacts
 
 `cache_priming.hhbc` is useful when you have some cache data that should be
 compiled and deployed in parallel with the rest of your code.
-Secondary repo is used by hhvm in addition with the primary code repo.
+Secondary bytecode repo is used by hhvm in addition with the primary code repo.
 `use_php_cache_priming=1` env flag enables this.
 
-`cache_priming.so`, not yet implemented.
+`cache_priming.so`, similar as `.hhbc`, big difference is that this is compiled
+and loaded in a different way (as a dynamic library).
+`use_so_cache_priming=1` env flag enables this.
 
 TODO
 ====

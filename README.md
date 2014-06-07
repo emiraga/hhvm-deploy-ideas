@@ -28,6 +28,21 @@ I am deploying `hhvm` binary together with the repo and the rest for the followi
 * Reverting the release means that we only have to change one symlink and everything else (runtime binary and bytecode repo) will match.
 * Static contents is tied together with the release, so that it makes sense to keep static contents in the same release directory as well.
 
+Cache priming
+=============
+
+This is optional but I present two different ways you can pre-populate some
+data and make it available to you PHP code at runtime.
+
+First is `use_php_cache_priming=1` which generates php files, which are then
+compiled into an `cache_priming.hhbc` and can be used at runtime.
+
+Second apprach is `use_so_cache_priming=1` which generates cpp files which
+contain serialized data. These are loaded at runtime from a dynamic library
+called `cache_priming.so`.
+
+See example in: `0source/readcache.php`.
+
 Assumptions
 ===========
 
